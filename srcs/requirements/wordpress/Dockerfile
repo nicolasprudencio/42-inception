@@ -18,8 +18,8 @@ RUN chown -R www-data:www-data /var/www/html && \
 
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-COPY tools/script.sh /tmp/script.sh
+COPY tools/wp_config.sh /tmp/wp_config.sh
 
-RUN chmod +x /tmp/script.sh
+RUN chmod +x /tmp/wp_config.sh
 
-CMD ["/tmp/script.sh"]
+CMD ["/tmp/wp_config.sh"]

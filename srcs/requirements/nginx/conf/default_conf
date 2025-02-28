@@ -1,0 +1,27 @@
+server {
+	
+	listen 443 ssl default_server;
+	listen [::]:443 ssl default_server;
+
+	include snippets/snakeoil.conf;
+
+	root /var/www/html;
+
+	index index.php index.html;
+
+	server_name nprudenc.42.fr www.nprudenc.42.fr;
+
+	location / {
+		try_files $uri $uri/ =404;
+	}
+
+	location ~ \.php$ {
+		include snippets/fastcgi-php.conf;
+		fastcgi_pass wordpress:9000;
+	}
+
+
+	location ~ /\.ht {
+		deny all;
+	}
+}

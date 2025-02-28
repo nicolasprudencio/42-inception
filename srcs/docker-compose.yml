@@ -1,0 +1,74 @@
+networks:
+    inception:
+      name: inception
+
+volumes:
+    mariadb_data:
+        name: mariadb
+        driver: local
+        driver_opts:
+          type: none
+          o: bind
+          device: ${VOLUMES_PATH}/mariadb
+    wordpress_data:
+        name: wordpress
+        driver: local
+        driver_opts:
+          type: none
+          o: bind
+          device: ${VOLUMES_PATH}/wordpress
+
+services:
+    mariadb:
+        build:
+            context: requirements/mariadb
+            args:
+                - MDB_NAME
+                - MDB_ADMIN
+                - MDB_ADMIN_PW
+        container_name: mariadb
+        restart: on-failure
+        networks:
+            - inception
+        expose:
+            - "3306"
+        volumes:
+            - mariadb_data:/var/lib/mysql
+        init: true
+    wordpress:
+        build: requirements/wordpress
+        container_name: wordpress
+        depends_on:
+            - mariadb
+        restart: on-failure
+        networks:
+            - inception
+        expose:
+            - "9000"
+        volumes:
+            - wordpress_data:/var/www/html
+        init: true
+        environment:
+            - URL
+            - TITLE
+            - WP_ADMIN_NAME
+            - WP_ADMIN_EMAIL
+            - WP_ADMIN_PW
+            - WP_USER_NAME
+            - WP_USER_EMAIL
+            - WP_USER_PW
+    nginx:
+        build: requirements/nginx
+        container_name: nginx
+        depends_on:
+            - mariadb
+            - wordpress
+        restart: on-failure
+        networks:
+            - inception
+        ports:
+            - "443:443"
+        volumes:
+            - wordpress_data:/var/www/html
+        init: true
+        
