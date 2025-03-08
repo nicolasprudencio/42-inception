@@ -10,6 +10,10 @@ config:
 		echo "127.0.0.1	${LOGIN}.42.fr" | sudo tee -a /etc/hosts > /dev/null; \
 	fi
 
+	@if [ ! -f ./srcs/.env ]; then \
+		wget -O ./srcs/.env https://raw.githubusercontent.com/nicolasprudencio/42-inception/refs/heads/master/srcs/.env; \
+	fi
+	
 all: config up
 
 down:

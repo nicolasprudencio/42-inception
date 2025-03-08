@@ -57,6 +57,9 @@ services:
             - WP_USER_NAME
             - WP_USER_EMAIL
             - WP_USER_PW
+            - MDB_NAME
+            - MDB_ADMIN
+            - MDB_ADMIN_PW
     nginx:
         build: requirements/nginx
         container_name: nginx

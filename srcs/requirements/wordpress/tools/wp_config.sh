@@ -28,7 +28,8 @@ wp core install \
 
 wp --allow-root theme activate twentytwentyfour || echo "Theme activation failed!"
 
-wp --allow-root user create "$WP_USER_NAME" "$WP_USER_EMAIL" --role=editor --user_pass=$WORDPRESS_USER_PW
+wp --allow-root user create "$WP_USER_NAME" "$WP_USER_EMAIL" --role=editor --user_pass=$WP_USER_PW
+
 unset MDB_NAME MDB_ADMIN MDB_ADMIN_PW URL TITLE WP_ADMIN_USER WP_ADMIN_PW WP_ADMIN_EMAIL
 
 exec php-fpm7.4 -F

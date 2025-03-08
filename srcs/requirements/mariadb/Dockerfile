@@ -16,3 +16,5 @@ RUN chown -R mysql:mysql /var/run/mysqld
 RUN chmod -R 755 /var/run/mysqld
 RUN chmod +x /tmp/mdb_config.sh 
 RUN bash /tmp/mdb_config.sh
+
+CMD ["mysqld_safe"]
